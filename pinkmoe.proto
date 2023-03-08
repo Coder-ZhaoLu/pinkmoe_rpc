@@ -1,0 +1,173 @@
+syntax = "proto3";
+
+package pinkmoe;
+option go_package="./pinkmoe";
+
+message CommentListResp {
+  uint64 total = 1;
+  repeated CommentInfo data = 2;
+}
+
+message CommentListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string content = 3;
+}
+
+message IDReq {
+  uint64 id = 1;
+}
+
+message UUIDsReq {
+  repeated string ids = 1;
+}
+
+message BaseUUIDResp {
+  string id = 1;
+  string msg = 2;
+}
+
+message CommentInfo {
+  string id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 status = 4;
+  string content = 5;
+  string service_uuid = 6;
+  string user_uuid = 7;
+  uint32 type = 8;
+}
+
+message SitemetaInfo {
+  uint64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  string key = 4;
+  string value = 5;
+}
+
+//  base message
+message Empty {}
+
+message UUIDReq {
+  string id = 1;
+}
+
+message CategoryListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string name = 3;
+  string slug = 4;
+  string icon = 5;
+}
+
+message ServiceListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string title = 3;
+  string content = 4;
+  string cover = 5;
+}
+
+message ServiceInfo {
+  string id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 status = 4;
+  string title = 5;
+  string content = 6;
+  int64 category_id = 7;
+  string author_uuid = 8;
+  string cover = 9;
+  uint32 type = 10;
+  uint32 price = 11;
+  uint64 view = 12;
+}
+
+message KeyReq {
+  string key = 1;
+}
+
+message IDsReq {
+  repeated uint64 ids = 1;
+}
+
+message PageInfoReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+}
+
+message BaseIDResp {
+  uint64 id = 1;
+  string msg = 2;
+}
+
+message CategoryInfo {
+  uint64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 sort = 4;
+  uint32 status = 5;
+  string name = 6;
+  string slug = 7;
+  string icon = 8;
+  string desc = 9;
+}
+
+message BaseResp {
+  string msg = 1;
+}
+
+message CategoryListResp {
+  uint64 total = 1;
+  repeated CategoryInfo data = 2;
+}
+
+message ServiceListResp {
+  uint64 total = 1;
+  repeated ServiceInfo data = 2;
+}
+
+service Pinkmoe {
+  //  group: base
+  rpc initDatabase(Empty) returns (BaseResp);
+  //  Category management
+  //  group: category
+  rpc createCategory(CategoryInfo) returns (BaseIDResp);
+  //  group: category
+  rpc updateCategory(CategoryInfo) returns (BaseResp);
+  //  group: category
+  rpc getCategoryList(CategoryListReq) returns (CategoryListResp);
+  //  group: category
+  rpc getCategoryById(IDReq) returns (CategoryInfo);
+  //  group: category
+  rpc deleteCategory(IDsReq) returns (BaseResp);
+  //  Comment management
+  //  group: comment
+  rpc createComment(CommentInfo) returns (BaseUUIDResp);
+  //  group: comment
+  rpc updateComment(CommentInfo) returns (BaseResp);
+  //  group: comment
+  rpc getCommentList(CommentListReq) returns (CommentListResp);
+  //  group: comment
+  rpc getCommentById(UUIDReq) returns (CommentInfo);
+  //  group: comment
+  rpc deleteComment(UUIDsReq) returns (BaseResp);
+  //  Service management
+  //  group: service
+  rpc createService(ServiceInfo) returns (BaseUUIDResp);
+  //  group: service
+  rpc updateService(ServiceInfo) returns (BaseResp);
+  //  group: service
+  rpc getServiceList(ServiceListReq) returns (ServiceListResp);
+  //  group: service
+  rpc getServiceById(UUIDReq) returns (ServiceInfo);
+  //  group: service
+  rpc deleteService(UUIDsReq) returns (BaseResp);
+  //  Sitemeta management
+  //  group: sitemeta
+  rpc updateSitemeta(SitemetaInfo) returns (BaseResp);
+  //  group: sitemeta
+  rpc getSitemetaById(KeyReq) returns (SitemetaInfo);
+}
+

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+// Sitemeta message
+
+message SitemetaInfo {
+  uint64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  string key = 4;
+  string value = 5;
+}
+
+message KeyReq {
+  string key = 1;
+}
+
+
+service Pinkmoe {
+
+  // Sitemeta management
+  // group: sitemeta
+  rpc updateSitemeta (SitemetaInfo) returns (BaseResp);
+  // group: sitemeta
+  rpc getSitemetaById (KeyReq) returns (SitemetaInfo);
+
+
+}
