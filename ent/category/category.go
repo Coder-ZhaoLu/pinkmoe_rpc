@@ -27,6 +27,8 @@ const (
 	FieldIcon = "icon"
 	// FieldDesc holds the string denoting the desc field in the database.
 	FieldDesc = "desc"
+	// FieldType holds the string denoting the type field in the database.
+	FieldType = "type"
 	// Table holds the table name of the category in the database.
 	Table = "categories"
 )
@@ -42,6 +44,7 @@ var Columns = []string{
 	FieldSlug,
 	FieldIcon,
 	FieldDesc,
+	FieldType,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -65,4 +68,6 @@ var (
 	DefaultSort uint32
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus uint8
+	// DefaultType holds the default value on creation for the "type" field.
+	DefaultType uint32
 )

@@ -19,6 +19,7 @@ var (
 		{Name: "slug", Type: field.TypeString},
 		{Name: "icon", Type: field.TypeString},
 		{Name: "desc", Type: field.TypeString},
+		{Name: "type", Type: field.TypeUint32, Default: 1},
 	}
 	// CategoriesTable holds the schema information for the "categories" table.
 	CategoriesTable = &schema.Table{

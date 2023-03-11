@@ -44,6 +44,10 @@ func init() {
 	categoryDescStatus := categoryMixinFields2[0].Descriptor()
 	// category.DefaultStatus holds the default value on creation for the status field.
 	category.DefaultStatus = categoryDescStatus.Default.(uint8)
+	// categoryDescType is the schema descriptor for type field.
+	categoryDescType := categoryFields[4].Descriptor()
+	// category.DefaultType holds the default value on creation for the type field.
+	category.DefaultType = categoryDescType.Default.(uint32)
 	commentMixin := schema.Comment{}.Mixin()
 	commentMixinFields0 := commentMixin[0].Fields()
 	_ = commentMixinFields0

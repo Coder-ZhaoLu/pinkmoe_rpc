@@ -50,6 +50,7 @@ func (l *GetServiceListLogic) GetServiceList(in *pinkmoe.ServiceListReq) (*pinkm
 			Title:      v.Title,
 			Content:    v.Content,
 			CategoryId: int64(v.CategoryID),
+			Cover:      v.Cover,
 			AuthorUuid: v.AuthorUUID,
 			Type:       v.Type,
 			Price:      v.Price,

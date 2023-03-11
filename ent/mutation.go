@@ -51,6 +51,8 @@ type CategoryMutation struct {
 	slug          *string
 	icon          *string
 	desc          *string
+	_type         *uint32
+	add_type      *int32
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Category, error)
@@ -503,6 +505,62 @@ func (m *CategoryMutation) ResetDesc() {
 	m.desc = nil
 }
 
+// SetType sets the "type" field.
+func (m *CategoryMutation) SetType(u uint32) {
+	m._type = &u
+	m.add_type = nil
+}
+
+// GetType returns the value of the "type" field in the mutation.
+func (m *CategoryMutation) GetType() (r uint32, exists bool) {
+	v := m._type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldType returns the old "type" field's value of the Category entity.
+// If the Category object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CategoryMutation) OldType(ctx context.Context) (v uint32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldType: %w", err)
+	}
+	return oldValue.Type, nil
+}
+
+// AddType adds u to the "type" field.
+func (m *CategoryMutation) AddType(u int32) {
+	if m.add_type != nil {
+		*m.add_type += u
+	} else {
+		m.add_type = &u
+	}
+}
+
+// AddedType returns the value that was added to the "type" field in this mutation.
+func (m *CategoryMutation) AddedType() (r int32, exists bool) {
+	v := m.add_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetType resets all changes to the "type" field.
+func (m *CategoryMutation) ResetType() {
+	m._type = nil
+	m.add_type = nil
+}
+
 // Where appends a list predicates to the CategoryMutation builder.
 func (m *CategoryMutation) Where(ps ...predicate.Category) {
 	m.predicates = append(m.predicates, ps...)
@@ -537,7 +595,7 @@ func (m *CategoryMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CategoryMutation) Fields() []string {
-	fields := make([]string, 0, 8)
+	fields := make([]string, 0, 9)
 	if m.created_at != nil {
 		fields = append(fields, category.FieldCreatedAt)
 	}
@@ -561,6 +619,9 @@ func (m *CategoryMutation) Fields() []string {
 	}
 	if m.desc != nil {
 		fields = append(fields, category.FieldDesc)
+	}
+	if m._type != nil {
+		fields = append(fields, category.FieldType)
 	}
 	return fields
 }
@@ -586,6 +647,8 @@ func (m *CategoryMutation) Field(name string) (ent.Value, bool) {
 		return m.Icon()
 	case category.FieldDesc:
 		return m.Desc()
+	case category.FieldType:
+		return m.GetType()
 	}
 	return nil, false
 }
@@ -611,6 +674,8 @@ func (m *CategoryMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldIcon(ctx)
 	case category.FieldDesc:
 		return m.OldDesc(ctx)
+	case category.FieldType:
+		return m.OldType(ctx)
 	}
 	return nil, fmt.Errorf("unknown Category field %s", name)
 }
@@ -676,6 +741,13 @@ func (m *CategoryMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDesc(v)
 		return nil
+	case category.FieldType:
+		v, ok := value.(uint32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetType(v)
+		return nil
 	}
 	return fmt.Errorf("unknown Category field %s", name)
 }
@@ -690,6 +762,9 @@ func (m *CategoryMutation) AddedFields() []string {
 	if m.addstatus != nil {
 		fields = append(fields, category.FieldStatus)
 	}
+	if m.add_type != nil {
+		fields = append(fields, category.FieldType)
+	}
 	return fields
 }
 
@@ -702,6 +777,8 @@ func (m *CategoryMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedSort()
 	case category.FieldStatus:
 		return m.AddedStatus()
+	case category.FieldType:
+		return m.AddedType()
 	}
 	return nil, false
 }
@@ -724,6 +801,13 @@ func (m *CategoryMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddStatus(v)
+		return nil
+	case category.FieldType:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddType(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Category numeric field %s", name)
@@ -784,6 +868,9 @@ func (m *CategoryMutation) ResetField(name string) error {
 		return nil
 	case category.FieldDesc:
 		m.ResetDesc()
+		return nil
+	case category.FieldType:
+		m.ResetType()
 		return nil
 	}
 	return fmt.Errorf("unknown Category field %s", name)

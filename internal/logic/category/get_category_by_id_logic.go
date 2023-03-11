@@ -39,5 +39,6 @@ func (l *GetCategoryByIdLogic) GetCategoryById(in *pinkmoe.IDReq) (*pinkmoe.Cate
 		Slug:      result.Slug,
 		Icon:      result.Icon,
 		Desc:      result.Desc,
+		Type:      result.Type,
 	}, nil
 }

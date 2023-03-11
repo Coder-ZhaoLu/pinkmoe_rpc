@@ -100,6 +100,20 @@ func (cc *CategoryCreate) SetDesc(s string) *CategoryCreate {
 	return cc
 }
 
+// SetType sets the "type" field.
+func (cc *CategoryCreate) SetType(u uint32) *CategoryCreate {
+	cc.mutation.SetType(u)
+	return cc
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableType(u *uint32) *CategoryCreate {
+	if u != nil {
+		cc.SetType(*u)
+	}
+	return cc
+}
+
 // SetID sets the "id" field.
 func (cc *CategoryCreate) SetID(u uint64) *CategoryCreate {
 	cc.mutation.SetID(u)
@@ -157,6 +171,10 @@ func (cc *CategoryCreate) defaults() {
 		v := category.DefaultStatus
 		cc.mutation.SetStatus(v)
 	}
+	if _, ok := cc.mutation.GetType(); !ok {
+		v := category.DefaultType
+		cc.mutation.SetType(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -181,6 +199,9 @@ func (cc *CategoryCreate) check() error {
 	}
 	if _, ok := cc.mutation.Desc(); !ok {
 		return &ValidationError{Name: "desc", err: errors.New(`ent: missing required field "Category.desc"`)}
+	}
+	if _, ok := cc.mutation.GetType(); !ok {
+		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Category.type"`)}
 	}
 	return nil
 }
@@ -245,6 +266,10 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 	if value, ok := cc.mutation.Desc(); ok {
 		_spec.SetField(category.FieldDesc, field.TypeString, value)
 		_node.Desc = value
+	}
+	if value, ok := cc.mutation.GetType(); ok {
+		_spec.SetField(category.FieldType, field.TypeUint32, value)
+		_node.Type = value
 	}
 	return _node, _spec
 }

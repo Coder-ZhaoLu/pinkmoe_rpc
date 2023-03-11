@@ -12,6 +12,7 @@ message CategoryInfo {
   string slug = 7;
   string icon = 8;
   string desc = 9;
+  uint32 type = 10;
 }
 
 message CategoryListResp {
@@ -25,6 +26,7 @@ message CategoryListReq {
   string name = 3;
   string slug = 4;
   string icon = 5;
+  uint32 type = 6;
 }
 
 

@@ -32,6 +32,8 @@ type Category struct {
 	Icon string `json:"icon,omitempty"`
 	// Desc | 描述
 	Desc string `json:"desc,omitempty"`
+	// Type | 类型 1: 微服务 2: 组件库
+	Type uint32 `json:"type,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -39,7 +41,7 @@ func (*Category) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case category.FieldID, category.FieldSort, category.FieldStatus:
+		case category.FieldID, category.FieldSort, category.FieldStatus, category.FieldType:
 			values[i] = new(sql.NullInt64)
 		case category.FieldName, category.FieldSlug, category.FieldIcon, category.FieldDesc:
 			values[i] = new(sql.NullString)
@@ -114,6 +116,12 @@ func (c *Category) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				c.Desc = value.String
 			}
+		case category.FieldType:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				c.Type = uint32(value.Int64)
+			}
 		}
 	}
 	return nil
@@ -165,6 +173,9 @@ func (c *Category) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("desc=")
 	builder.WriteString(c.Desc)
+	builder.WriteString(", ")
+	builder.WriteString("type=")
+	builder.WriteString(fmt.Sprintf("%v", c.Type))
 	builder.WriteByte(')')
 	return builder.String()
 }

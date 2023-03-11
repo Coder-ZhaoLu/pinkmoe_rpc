@@ -106,6 +106,27 @@ func (cu *CategoryUpdate) SetDesc(s string) *CategoryUpdate {
 	return cu
 }
 
+// SetType sets the "type" field.
+func (cu *CategoryUpdate) SetType(u uint32) *CategoryUpdate {
+	cu.mutation.ResetType()
+	cu.mutation.SetType(u)
+	return cu
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableType(u *uint32) *CategoryUpdate {
+	if u != nil {
+		cu.SetType(*u)
+	}
+	return cu
+}
+
+// AddType adds u to the "type" field.
+func (cu *CategoryUpdate) AddType(u int32) *CategoryUpdate {
+	cu.mutation.AddType(u)
+	return cu
+}
+
 // Mutation returns the CategoryMutation object of the builder.
 func (cu *CategoryUpdate) Mutation() *CategoryMutation {
 	return cu.mutation
@@ -185,6 +206,12 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := cu.mutation.Desc(); ok {
 		_spec.SetField(category.FieldDesc, field.TypeString, value)
+	}
+	if value, ok := cu.mutation.GetType(); ok {
+		_spec.SetField(category.FieldType, field.TypeUint32, value)
+	}
+	if value, ok := cu.mutation.AddedType(); ok {
+		_spec.AddField(category.FieldType, field.TypeUint32, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -281,6 +308,27 @@ func (cuo *CategoryUpdateOne) SetIcon(s string) *CategoryUpdateOne {
 // SetDesc sets the "desc" field.
 func (cuo *CategoryUpdateOne) SetDesc(s string) *CategoryUpdateOne {
 	cuo.mutation.SetDesc(s)
+	return cuo
+}
+
+// SetType sets the "type" field.
+func (cuo *CategoryUpdateOne) SetType(u uint32) *CategoryUpdateOne {
+	cuo.mutation.ResetType()
+	cuo.mutation.SetType(u)
+	return cuo
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableType(u *uint32) *CategoryUpdateOne {
+	if u != nil {
+		cuo.SetType(*u)
+	}
+	return cuo
+}
+
+// AddType adds u to the "type" field.
+func (cuo *CategoryUpdateOne) AddType(u int32) *CategoryUpdateOne {
+	cuo.mutation.AddType(u)
 	return cuo
 }
 
@@ -393,6 +441,12 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 	}
 	if value, ok := cuo.mutation.Desc(); ok {
 		_spec.SetField(category.FieldDesc, field.TypeString, value)
+	}
+	if value, ok := cuo.mutation.GetType(); ok {
+		_spec.SetField(category.FieldType, field.TypeUint32, value)
+	}
+	if value, ok := cuo.mutation.AddedType(); ok {
+		_spec.AddField(category.FieldType, field.TypeUint32, value)
 	}
 	_node = &Category{config: cuo.config}
 	_spec.Assign = _node.assignValues

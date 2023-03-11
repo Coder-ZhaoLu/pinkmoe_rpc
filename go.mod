@@ -6,6 +6,7 @@ replace github.com/zeromicro/go-zero v1.4.4 => github.com/suyuan32/simple-admin-
 
 require (
 	entgo.io/ent v0.11.8
+	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/suyuan32/simple-admin-core v0.2.6
 	github.com/zeromicro/go-zero v1.4.4
 	google.golang.org/grpc v1.53.0
@@ -39,7 +40,6 @@ require (
 	github.com/go-openapi/swag v0.22.3 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
-	github.com/gofrs/uuid/v5 v5.0.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect

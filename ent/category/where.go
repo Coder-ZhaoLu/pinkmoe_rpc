@@ -94,6 +94,11 @@ func Desc(v string) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldDesc, v))
 }
 
+// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
+func Type(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldType, v))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldCreatedAt, v))
@@ -522,6 +527,46 @@ func DescEqualFold(v string) predicate.Category {
 // DescContainsFold applies the ContainsFold predicate on the "desc" field.
 func DescContainsFold(v string) predicate.Category {
 	return predicate.Category(sql.FieldContainsFold(FieldDesc, v))
+}
+
+// TypeEQ applies the EQ predicate on the "type" field.
+func TypeEQ(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldType, v))
+}
+
+// TypeNEQ applies the NEQ predicate on the "type" field.
+func TypeNEQ(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldNEQ(FieldType, v))
+}
+
+// TypeIn applies the In predicate on the "type" field.
+func TypeIn(vs ...uint32) predicate.Category {
+	return predicate.Category(sql.FieldIn(FieldType, vs...))
+}
+
+// TypeNotIn applies the NotIn predicate on the "type" field.
+func TypeNotIn(vs ...uint32) predicate.Category {
+	return predicate.Category(sql.FieldNotIn(FieldType, vs...))
+}
+
+// TypeGT applies the GT predicate on the "type" field.
+func TypeGT(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldGT(FieldType, v))
+}
+
+// TypeGTE applies the GTE predicate on the "type" field.
+func TypeGTE(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldGTE(FieldType, v))
+}
+
+// TypeLT applies the LT predicate on the "type" field.
+func TypeLT(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldLT(FieldType, v))
+}
+
+// TypeLTE applies the LTE predicate on the "type" field.
+func TypeLTE(v uint32) predicate.Category {
+	return predicate.Category(sql.FieldLTE(FieldType, v))
 }
 
 // And groups predicates with the AND operator between them.

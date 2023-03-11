@@ -99,6 +99,22 @@ func (c *CategoryUpdateOne) SetNotEmptyDesc(value string) *CategoryUpdateOne {
 }
 
 // set field if value is not empty. e.g. string does not equal to ""
+func (c *CategoryUpdate) SetNotEmptyType(value uint32) *CategoryUpdate {
+	if value != 0 {
+		return c.SetType(value)
+	}
+	return c
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (c *CategoryUpdateOne) SetNotEmptyType(value uint32) *CategoryUpdateOne {
+	if value != 0 {
+		return c.SetType(value)
+	}
+	return c
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
 func (c *CommentUpdate) SetNotEmptyStatus(value uint8) *CommentUpdate {
 	if value != 0 {
 		return c.SetStatus(value)

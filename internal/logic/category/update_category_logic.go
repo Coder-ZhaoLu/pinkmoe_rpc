@@ -31,6 +31,7 @@ func (l *UpdateCategoryLogic) UpdateCategory(in *pinkmoe.CategoryInfo) (*pinkmoe
 		SetNotEmptyIcon(in.Icon).
 		SetNotEmptySlug(in.Slug).
 		SetNotEmptySort(in.Sort).
+		SetNotEmptyType(in.Type).
 		SetNotEmptyStatus(uint8(in.Status)).
 		Exec(l.ctx)
 	if err != nil {

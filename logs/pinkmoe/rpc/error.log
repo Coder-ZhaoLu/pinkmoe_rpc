@@ -68,3 +68,16 @@
 {"@timestamp":"2023-03-03T00:10:46.861+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-08T21:57:24.355+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-08T21:58:35.664+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-08T22:50:17.139+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-08T23:10:37.449+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-08T23:11:10.352+08:00","caller":"errorhandler/error_handler.go:29","content":"database error","detail":"Error 1054 (42S22): Unknown column 'services.category_id' in 'field list'","level":"error"}
+{"@timestamp":"2023-03-08T23:11:17.949+08:00","caller":"errorhandler/error_handler.go:29","content":"database error","detail":"Error 1054 (42S22): Unknown column 'services.category_id' in 'field list'","level":"error"}
+{"@timestamp":"2023-03-08T23:43:55.782+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-08T23:55:17.093+08:00","caller":"errorhandler/error_handler.go:29","content":"database error","detail":"Error 1406 (22001): Data too long for column 'value' at row 1","level":"error"}
+{"@timestamp":"2023-03-09T17:13:15.111+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-10T17:59:24.851+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-11T23:02:54.712+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-11T23:03:42.038+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-11T23:04:36.069+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-11T23:06:13.376+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-11T23:06:46.730+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}

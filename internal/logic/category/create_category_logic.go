@@ -34,6 +34,7 @@ func (l *CreateCategoryLogic) CreateCategory(in *pinkmoe.CategoryInfo) (*pinkmoe
 		SetDesc(in.Desc).
 		SetName(in.Name).
 		SetID(in.Id).
+		SetType(in.Type).
 		Save(l.ctx)
 	if err != nil {
 		return nil, errorhandler.DefaultEntError(err, in)
