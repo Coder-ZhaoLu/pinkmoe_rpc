@@ -53,6 +53,7 @@ type (
 		UpdateService(ctx context.Context, in *ServiceInfo, opts ...grpc.CallOption) (*BaseResp, error)
 		GetServiceList(ctx context.Context, in *ServiceListReq, opts ...grpc.CallOption) (*ServiceListResp, error)
 		GetServiceById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*ServiceInfo, error)
+		GetServiceByIds(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*ServiceListResp, error)
 		DeleteService(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
 		// Sitemeta management
 		UpdateSitemeta(ctx context.Context, in *SitemetaInfo, opts ...grpc.CallOption) (*BaseResp, error)
@@ -146,6 +147,11 @@ func (m *defaultPinkmoe) GetServiceList(ctx context.Context, in *ServiceListReq,
 func (m *defaultPinkmoe) GetServiceById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*ServiceInfo, error) {
 	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
 	return client.GetServiceById(ctx, in, opts...)
+}
+
+func (m *defaultPinkmoe) GetServiceByIds(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*ServiceListResp, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.GetServiceByIds(ctx, in, opts...)
 }
 
 func (m *defaultPinkmoe) DeleteService(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error) {

@@ -54,6 +54,7 @@ func (l *GetCategoryListLogic) GetCategoryList(in *pinkmoe.CategoryListReq) (*pi
 			Slug:      v.Slug,
 			Icon:      v.Icon,
 			Desc:      v.Desc,
+			Type:      v.Type,
 		})
 	}
 

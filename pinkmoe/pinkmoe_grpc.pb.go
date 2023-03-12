@@ -56,6 +56,8 @@ type PinkmoeClient interface {
 	// group: service
 	GetServiceById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*ServiceInfo, error)
 	// group: service
+	GetServiceByIds(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*ServiceListResp, error)
+	// group: service
 	DeleteService(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
 	// Sitemeta management
 	// group: sitemeta
@@ -207,6 +209,15 @@ func (c *pinkmoeClient) GetServiceById(ctx context.Context, in *UUIDReq, opts ..
 	return out, nil
 }
 
+func (c *pinkmoeClient) GetServiceByIds(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*ServiceListResp, error) {
+	out := new(ServiceListResp)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/getServiceByIds", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *pinkmoeClient) DeleteService(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error) {
 	out := new(BaseResp)
 	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/deleteService", in, out, opts...)
@@ -272,6 +283,8 @@ type PinkmoeServer interface {
 	// group: service
 	GetServiceById(context.Context, *UUIDReq) (*ServiceInfo, error)
 	// group: service
+	GetServiceByIds(context.Context, *UUIDsReq) (*ServiceListResp, error)
+	// group: service
 	DeleteService(context.Context, *UUIDsReq) (*BaseResp, error)
 	// Sitemeta management
 	// group: sitemeta
@@ -329,6 +342,9 @@ func (UnimplementedPinkmoeServer) GetServiceList(context.Context, *ServiceListRe
 }
 func (UnimplementedPinkmoeServer) GetServiceById(context.Context, *UUIDReq) (*ServiceInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetServiceById not implemented")
+}
+func (UnimplementedPinkmoeServer) GetServiceByIds(context.Context, *UUIDsReq) (*ServiceListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetServiceByIds not implemented")
 }
 func (UnimplementedPinkmoeServer) DeleteService(context.Context, *UUIDsReq) (*BaseResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteService not implemented")
@@ -622,6 +638,24 @@ func _Pinkmoe_GetServiceById_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pinkmoe_GetServiceByIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UUIDsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).GetServiceByIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/getServiceByIds",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).GetServiceByIds(ctx, req.(*UUIDsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Pinkmoe_DeleteService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UUIDsReq)
 	if err := dec(in); err != nil {
@@ -742,6 +776,10 @@ var Pinkmoe_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getServiceById",
 			Handler:    _Pinkmoe_GetServiceById_Handler,
+		},
+		{
+			MethodName: "getServiceByIds",
+			Handler:    _Pinkmoe_GetServiceByIds_Handler,
 		},
 		{
 			MethodName: "deleteService",

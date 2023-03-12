@@ -43,6 +43,8 @@ service Pinkmoe {
   // group: service
   rpc getServiceById (UUIDReq) returns (ServiceInfo);
   // group: service
+  rpc getServiceByIds (UUIDsReq) returns (ServiceListResp);
+  // group: service
   rpc deleteService (UUIDsReq) returns (BaseResp);
 
 

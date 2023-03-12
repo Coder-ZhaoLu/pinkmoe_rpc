@@ -104,6 +104,11 @@ func (s *PinkmoeServer) GetServiceById(ctx context.Context, in *pinkmoe.UUIDReq)
 	return l.GetServiceById(in)
 }
 
+func (s *PinkmoeServer) GetServiceByIds(ctx context.Context, in *pinkmoe.UUIDsReq) (*pinkmoe.ServiceListResp, error) {
+	l := service.NewGetServiceByIdsLogic(ctx, s.svcCtx)
+	return l.GetServiceByIds(in)
+}
+
 func (s *PinkmoeServer) DeleteService(ctx context.Context, in *pinkmoe.UUIDsReq) (*pinkmoe.BaseResp, error) {
 	l := service.NewDeleteServiceLogic(ctx, s.svcCtx)
 	return l.DeleteService(in)
