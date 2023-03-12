@@ -99,6 +99,12 @@ func (sc *ServiceCreate) SetCover(s string) *ServiceCreate {
 	return sc
 }
 
+// SetDocument sets the "document" field.
+func (sc *ServiceCreate) SetDocument(s string) *ServiceCreate {
+	sc.mutation.SetDocument(s)
+	return sc
+}
+
 // SetType sets the "type" field.
 func (sc *ServiceCreate) SetType(u uint32) *ServiceCreate {
 	sc.mutation.SetType(u)
@@ -234,6 +240,9 @@ func (sc *ServiceCreate) check() error {
 	if _, ok := sc.mutation.Cover(); !ok {
 		return &ValidationError{Name: "cover", err: errors.New(`ent: missing required field "Service.cover"`)}
 	}
+	if _, ok := sc.mutation.Document(); !ok {
+		return &ValidationError{Name: "document", err: errors.New(`ent: missing required field "Service.document"`)}
+	}
 	if _, ok := sc.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Service.type"`)}
 	}
@@ -313,6 +322,10 @@ func (sc *ServiceCreate) createSpec() (*Service, *sqlgraph.CreateSpec) {
 	if value, ok := sc.mutation.Cover(); ok {
 		_spec.SetField(service.FieldCover, field.TypeString, value)
 		_node.Cover = value
+	}
+	if value, ok := sc.mutation.Document(); ok {
+		_spec.SetField(service.FieldDocument, field.TypeString, value)
+		_node.Document = value
 	}
 	if value, ok := sc.mutation.GetType(); ok {
 		_spec.SetField(service.FieldType, field.TypeUint32, value)

@@ -34,6 +34,7 @@ func (l *UpdateServiceLogic) UpdateService(in *pinkmoe.ServiceInfo) (*pinkmoe.Ba
 		SetNotEmptyCategoryID(uint64(in.CategoryId)).
 		SetNotEmptyAuthorUUID(in.AuthorUuid).
 		SetNotEmptyType(in.Type).
+		SetNotEmptyDocument(in.Document).
 		SetNotEmptyCover(in.Cover).
 		SetNotEmptyPrice(in.Price).
 		SetNotEmptyView(in.View).

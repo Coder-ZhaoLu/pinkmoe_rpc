@@ -307,6 +307,22 @@ func (s *ServiceUpdateOne) SetNotEmptyCover(value string) *ServiceUpdateOne {
 }
 
 // set field if value is not empty. e.g. string does not equal to ""
+func (s *ServiceUpdate) SetNotEmptyDocument(value string) *ServiceUpdate {
+	if value != "" {
+		return s.SetDocument(value)
+	}
+	return s
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (s *ServiceUpdateOne) SetNotEmptyDocument(value string) *ServiceUpdateOne {
+	if value != "" {
+		return s.SetDocument(value)
+	}
+	return s
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
 func (s *ServiceUpdate) SetNotEmptyType(value uint32) *ServiceUpdate {
 	if value != 0 {
 		return s.SetType(value)
@@ -384,4 +400,84 @@ func (s *SitemetaUpdateOne) SetNotEmptyValue(value string) *SitemetaUpdateOne {
 		return s.SetValue(value)
 	}
 	return s
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdate) SetNotEmptyStatus(value uint8) *VersionUpdate {
+	if value != 0 {
+		return v.SetStatus(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdateOne) SetNotEmptyStatus(value uint8) *VersionUpdateOne {
+	if value != 0 {
+		return v.SetStatus(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdate) SetNotEmptyTitle(value string) *VersionUpdate {
+	if value != "" {
+		return v.SetTitle(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdateOne) SetNotEmptyTitle(value string) *VersionUpdateOne {
+	if value != "" {
+		return v.SetTitle(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdate) SetNotEmptyContent(value string) *VersionUpdate {
+	if value != "" {
+		return v.SetContent(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdateOne) SetNotEmptyContent(value string) *VersionUpdateOne {
+	if value != "" {
+		return v.SetContent(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdate) SetNotEmptyServiceUUID(value uint64) *VersionUpdate {
+	if value != 0 {
+		return v.SetServiceUUID(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdateOne) SetNotEmptyServiceUUID(value uint64) *VersionUpdateOne {
+	if value != 0 {
+		return v.SetServiceUUID(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdate) SetNotEmptyURL(value string) *VersionUpdate {
+	if value != "" {
+		return v.SetURL(value)
+	}
+	return v
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (v *VersionUpdateOne) SetNotEmptyURL(value string) *VersionUpdateOne {
+	if value != "" {
+		return v.SetURL(value)
+	}
+	return v
 }

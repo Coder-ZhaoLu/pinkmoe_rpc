@@ -17,3 +17,6 @@ type Service func(*sql.Selector)
 
 // Sitemeta is the predicate function for sitemeta builders.
 type Sitemeta func(*sql.Selector)
+
+// Version is the predicate function for version builders.
+type Version func(*sql.Selector)

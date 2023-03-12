@@ -100,6 +100,11 @@ func Cover(v string) predicate.Service {
 	return predicate.Service(sql.FieldEQ(FieldCover, v))
 }
 
+// Document applies equality check predicate on the "document" field. It's identical to DocumentEQ.
+func Document(v string) predicate.Service {
+	return predicate.Service(sql.FieldEQ(FieldDocument, v))
+}
+
 // Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
 func Type(v uint32) predicate.Service {
 	return predicate.Service(sql.FieldEQ(FieldType, v))
@@ -608,6 +613,71 @@ func CoverEqualFold(v string) predicate.Service {
 // CoverContainsFold applies the ContainsFold predicate on the "cover" field.
 func CoverContainsFold(v string) predicate.Service {
 	return predicate.Service(sql.FieldContainsFold(FieldCover, v))
+}
+
+// DocumentEQ applies the EQ predicate on the "document" field.
+func DocumentEQ(v string) predicate.Service {
+	return predicate.Service(sql.FieldEQ(FieldDocument, v))
+}
+
+// DocumentNEQ applies the NEQ predicate on the "document" field.
+func DocumentNEQ(v string) predicate.Service {
+	return predicate.Service(sql.FieldNEQ(FieldDocument, v))
+}
+
+// DocumentIn applies the In predicate on the "document" field.
+func DocumentIn(vs ...string) predicate.Service {
+	return predicate.Service(sql.FieldIn(FieldDocument, vs...))
+}
+
+// DocumentNotIn applies the NotIn predicate on the "document" field.
+func DocumentNotIn(vs ...string) predicate.Service {
+	return predicate.Service(sql.FieldNotIn(FieldDocument, vs...))
+}
+
+// DocumentGT applies the GT predicate on the "document" field.
+func DocumentGT(v string) predicate.Service {
+	return predicate.Service(sql.FieldGT(FieldDocument, v))
+}
+
+// DocumentGTE applies the GTE predicate on the "document" field.
+func DocumentGTE(v string) predicate.Service {
+	return predicate.Service(sql.FieldGTE(FieldDocument, v))
+}
+
+// DocumentLT applies the LT predicate on the "document" field.
+func DocumentLT(v string) predicate.Service {
+	return predicate.Service(sql.FieldLT(FieldDocument, v))
+}
+
+// DocumentLTE applies the LTE predicate on the "document" field.
+func DocumentLTE(v string) predicate.Service {
+	return predicate.Service(sql.FieldLTE(FieldDocument, v))
+}
+
+// DocumentContains applies the Contains predicate on the "document" field.
+func DocumentContains(v string) predicate.Service {
+	return predicate.Service(sql.FieldContains(FieldDocument, v))
+}
+
+// DocumentHasPrefix applies the HasPrefix predicate on the "document" field.
+func DocumentHasPrefix(v string) predicate.Service {
+	return predicate.Service(sql.FieldHasPrefix(FieldDocument, v))
+}
+
+// DocumentHasSuffix applies the HasSuffix predicate on the "document" field.
+func DocumentHasSuffix(v string) predicate.Service {
+	return predicate.Service(sql.FieldHasSuffix(FieldDocument, v))
+}
+
+// DocumentEqualFold applies the EqualFold predicate on the "document" field.
+func DocumentEqualFold(v string) predicate.Service {
+	return predicate.Service(sql.FieldEqualFold(FieldDocument, v))
+}
+
+// DocumentContainsFold applies the ContainsFold predicate on the "document" field.
+func DocumentContainsFold(v string) predicate.Service {
+	return predicate.Service(sql.FieldContainsFold(FieldDocument, v))
 }
 
 // TypeEQ applies the EQ predicate on the "type" field.

@@ -64,6 +64,17 @@ type PinkmoeClient interface {
 	UpdateSitemeta(ctx context.Context, in *SitemetaInfo, opts ...grpc.CallOption) (*BaseResp, error)
 	// group: sitemeta
 	GetSitemetaById(ctx context.Context, in *KeyReq, opts ...grpc.CallOption) (*SitemetaInfo, error)
+	// Version management
+	// group: version
+	CreateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
+	// group: version
+	UpdateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseResp, error)
+	// group: version
+	GetVersionList(ctx context.Context, in *VersionListReq, opts ...grpc.CallOption) (*VersionListResp, error)
+	// group: version
+	GetVersionById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*VersionInfo, error)
+	// group: version
+	DeleteVersion(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
 }
 
 type pinkmoeClient struct {
@@ -245,6 +256,51 @@ func (c *pinkmoeClient) GetSitemetaById(ctx context.Context, in *KeyReq, opts ..
 	return out, nil
 }
 
+func (c *pinkmoeClient) CreateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error) {
+	out := new(BaseUUIDResp)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/createVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pinkmoeClient) UpdateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseResp, error) {
+	out := new(BaseResp)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/updateVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pinkmoeClient) GetVersionList(ctx context.Context, in *VersionListReq, opts ...grpc.CallOption) (*VersionListResp, error) {
+	out := new(VersionListResp)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/getVersionList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pinkmoeClient) GetVersionById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*VersionInfo, error) {
+	out := new(VersionInfo)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/getVersionById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pinkmoeClient) DeleteVersion(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error) {
+	out := new(BaseResp)
+	err := c.cc.Invoke(ctx, "/pinkmoe.Pinkmoe/deleteVersion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PinkmoeServer is the server API for Pinkmoe service.
 // All implementations must embed UnimplementedPinkmoeServer
 // for forward compatibility
@@ -291,6 +347,17 @@ type PinkmoeServer interface {
 	UpdateSitemeta(context.Context, *SitemetaInfo) (*BaseResp, error)
 	// group: sitemeta
 	GetSitemetaById(context.Context, *KeyReq) (*SitemetaInfo, error)
+	// Version management
+	// group: version
+	CreateVersion(context.Context, *VersionInfo) (*BaseUUIDResp, error)
+	// group: version
+	UpdateVersion(context.Context, *VersionInfo) (*BaseResp, error)
+	// group: version
+	GetVersionList(context.Context, *VersionListReq) (*VersionListResp, error)
+	// group: version
+	GetVersionById(context.Context, *UUIDReq) (*VersionInfo, error)
+	// group: version
+	DeleteVersion(context.Context, *UUIDsReq) (*BaseResp, error)
 	mustEmbedUnimplementedPinkmoeServer()
 }
 
@@ -354,6 +421,21 @@ func (UnimplementedPinkmoeServer) UpdateSitemeta(context.Context, *SitemetaInfo)
 }
 func (UnimplementedPinkmoeServer) GetSitemetaById(context.Context, *KeyReq) (*SitemetaInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSitemetaById not implemented")
+}
+func (UnimplementedPinkmoeServer) CreateVersion(context.Context, *VersionInfo) (*BaseUUIDResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVersion not implemented")
+}
+func (UnimplementedPinkmoeServer) UpdateVersion(context.Context, *VersionInfo) (*BaseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVersion not implemented")
+}
+func (UnimplementedPinkmoeServer) GetVersionList(context.Context, *VersionListReq) (*VersionListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVersionList not implemented")
+}
+func (UnimplementedPinkmoeServer) GetVersionById(context.Context, *UUIDReq) (*VersionInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVersionById not implemented")
+}
+func (UnimplementedPinkmoeServer) DeleteVersion(context.Context, *UUIDsReq) (*BaseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteVersion not implemented")
 }
 func (UnimplementedPinkmoeServer) mustEmbedUnimplementedPinkmoeServer() {}
 
@@ -710,6 +792,96 @@ func _Pinkmoe_GetSitemetaById_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pinkmoe_CreateVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VersionInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).CreateVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/createVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).CreateVersion(ctx, req.(*VersionInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pinkmoe_UpdateVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VersionInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).UpdateVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/updateVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).UpdateVersion(ctx, req.(*VersionInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pinkmoe_GetVersionList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VersionListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).GetVersionList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/getVersionList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).GetVersionList(ctx, req.(*VersionListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pinkmoe_GetVersionById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UUIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).GetVersionById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/getVersionById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).GetVersionById(ctx, req.(*UUIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pinkmoe_DeleteVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UUIDsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PinkmoeServer).DeleteVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pinkmoe.Pinkmoe/deleteVersion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PinkmoeServer).DeleteVersion(ctx, req.(*UUIDsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pinkmoe_ServiceDesc is the grpc.ServiceDesc for Pinkmoe service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -792,6 +964,26 @@ var Pinkmoe_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getSitemetaById",
 			Handler:    _Pinkmoe_GetSitemetaById_Handler,
+		},
+		{
+			MethodName: "createVersion",
+			Handler:    _Pinkmoe_CreateVersion_Handler,
+		},
+		{
+			MethodName: "updateVersion",
+			Handler:    _Pinkmoe_UpdateVersion_Handler,
+		},
+		{
+			MethodName: "getVersionList",
+			Handler:    _Pinkmoe_GetVersionList_Handler,
+		},
+		{
+			MethodName: "getVersionById",
+			Handler:    _Pinkmoe_GetVersionById_Handler,
+		},
+		{
+			MethodName: "deleteVersion",
+			Handler:    _Pinkmoe_DeleteVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

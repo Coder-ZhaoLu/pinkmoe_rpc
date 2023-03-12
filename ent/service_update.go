@@ -104,6 +104,12 @@ func (su *ServiceUpdate) SetCover(s string) *ServiceUpdate {
 	return su
 }
 
+// SetDocument sets the "document" field.
+func (su *ServiceUpdate) SetDocument(s string) *ServiceUpdate {
+	su.mutation.SetDocument(s)
+	return su
+}
+
 // SetType sets the "type" field.
 func (su *ServiceUpdate) SetType(u uint32) *ServiceUpdate {
 	su.mutation.ResetType()
@@ -242,6 +248,9 @@ func (su *ServiceUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := su.mutation.Cover(); ok {
 		_spec.SetField(service.FieldCover, field.TypeString, value)
 	}
+	if value, ok := su.mutation.Document(); ok {
+		_spec.SetField(service.FieldDocument, field.TypeString, value)
+	}
 	if value, ok := su.mutation.GetType(); ok {
 		_spec.SetField(service.FieldType, field.TypeUint32, value)
 	}
@@ -353,6 +362,12 @@ func (suo *ServiceUpdateOne) SetAuthorUUID(s string) *ServiceUpdateOne {
 // SetCover sets the "cover" field.
 func (suo *ServiceUpdateOne) SetCover(s string) *ServiceUpdateOne {
 	suo.mutation.SetCover(s)
+	return suo
+}
+
+// SetDocument sets the "document" field.
+func (suo *ServiceUpdateOne) SetDocument(s string) *ServiceUpdateOne {
+	suo.mutation.SetDocument(s)
 	return suo
 }
 
@@ -523,6 +538,9 @@ func (suo *ServiceUpdateOne) sqlSave(ctx context.Context) (_node *Service, err e
 	}
 	if value, ok := suo.mutation.Cover(); ok {
 		_spec.SetField(service.FieldCover, field.TypeString, value)
+	}
+	if value, ok := suo.mutation.Document(); ok {
+		_spec.SetField(service.FieldDocument, field.TypeString, value)
 	}
 	if value, ok := suo.mutation.GetType(); ok {
 		_spec.SetField(service.FieldType, field.TypeUint32, value)

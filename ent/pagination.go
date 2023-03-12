@@ -10,6 +10,7 @@ import (
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/comment"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/service"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/sitemeta"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/version"
 )
 
 const errInvalidPage = "INVALID_PAGE"
@@ -366,6 +367,85 @@ func (s *SitemetaQuery) Page(
 
 	s = s.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
 	list, err := s.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+	ret.List = list
+
+	return ret, nil
+}
+
+type VersionPager struct {
+	Order  OrderFunc
+	Filter func(*VersionQuery) (*VersionQuery, error)
+}
+
+// VersionPaginateOption enables pagination customization.
+type VersionPaginateOption func(*VersionPager)
+
+// DefaultVersionOrder is the default ordering of Version.
+var DefaultVersionOrder = Desc(version.FieldID)
+
+func newVersionPager(opts []VersionPaginateOption) (*VersionPager, error) {
+	pager := &VersionPager{}
+	for _, opt := range opts {
+		opt(pager)
+	}
+	if pager.Order == nil {
+		pager.Order = DefaultVersionOrder
+	}
+	return pager, nil
+}
+
+func (p *VersionPager) ApplyFilter(query *VersionQuery) (*VersionQuery, error) {
+	if p.Filter != nil {
+		return p.Filter(query)
+	}
+	return query, nil
+}
+
+// VersionPageList is Version PageList result.
+type VersionPageList struct {
+	List        []*Version   `json:"list"`
+	PageDetails *PageDetails `json:"pageDetails"`
+}
+
+func (v *VersionQuery) Page(
+	ctx context.Context, pageNum uint64, pageSize uint64, opts ...VersionPaginateOption,
+) (*VersionPageList, error) {
+
+	pager, err := newVersionPager(opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if v, err = pager.ApplyFilter(v); err != nil {
+		return nil, err
+	}
+
+	ret := &VersionPageList{}
+
+	ret.PageDetails = &PageDetails{
+		Page: pageNum,
+		Size: pageSize,
+	}
+
+	count, err := v.Clone().Count(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	ret.PageDetails.Total = uint64(count)
+
+	if pager.Order != nil {
+		v = v.Order(pager.Order)
+	} else {
+		v = v.Order(DefaultVersionOrder)
+	}
+
+	v = v.Offset(int((pageNum - 1) * pageSize)).Limit(int(pageSize))
+	list, err := v.All(ctx)
 	if err != nil {
 		return nil, err
 	}

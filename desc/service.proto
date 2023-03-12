@@ -16,6 +16,7 @@ message ServiceInfo {
   uint32 type = 11;
   uint32 price = 12;
   uint64 view = 13;
+  string document = 14;
 }
 
 message ServiceListResp {

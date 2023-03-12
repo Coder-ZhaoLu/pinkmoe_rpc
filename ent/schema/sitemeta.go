@@ -14,7 +14,7 @@ type Sitemeta struct {
 func (Sitemeta) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("key").Comment("Key | 键"),
-		field.String("value").Comment("Value | 值"),
+		field.Text("value").Comment("Value | 值"),
 	}
 }
 

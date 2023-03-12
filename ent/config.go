@@ -31,12 +31,14 @@ type (
 		Comment  []ent.Hook
 		Service  []ent.Hook
 		Sitemeta []ent.Hook
+		Version  []ent.Hook
 	}
 	inters struct {
 		Category []ent.Interceptor
 		Comment  []ent.Interceptor
 		Service  []ent.Interceptor
 		Sitemeta []ent.Interceptor
+		Version  []ent.Interceptor
 	}
 )
 

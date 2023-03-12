@@ -33,7 +33,7 @@ var (
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Default: 1},
-		{Name: "content", Type: field.TypeString},
+		{Name: "content", Type: field.TypeString, Size: 2147483647},
 		{Name: "service_uuid", Type: field.TypeString},
 		{Name: "user_uuid", Type: field.TypeString},
 		{Name: "type", Type: field.TypeUint32, Default: 1},
@@ -52,10 +52,11 @@ var (
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Default: 1},
 		{Name: "title", Type: field.TypeString},
 		{Name: "desc", Type: field.TypeString},
-		{Name: "content", Type: field.TypeString},
+		{Name: "content", Type: field.TypeString, Size: 2147483647},
 		{Name: "category_id", Type: field.TypeUint64},
 		{Name: "author_uuid", Type: field.TypeString},
 		{Name: "cover", Type: field.TypeString},
+		{Name: "document", Type: field.TypeString},
 		{Name: "type", Type: field.TypeUint32, Default: 1},
 		{Name: "price", Type: field.TypeUint32},
 		{Name: "view", Type: field.TypeUint64, Default: 0},
@@ -72,7 +73,7 @@ var (
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "key", Type: field.TypeString},
-		{Name: "value", Type: field.TypeString},
+		{Name: "value", Type: field.TypeString, Size: 2147483647},
 	}
 	// SitemetaTable holds the schema information for the "sitemeta" table.
 	SitemetaTable = &schema.Table{
@@ -80,12 +81,30 @@ var (
 		Columns:    SitemetaColumns,
 		PrimaryKey: []*schema.Column{SitemetaColumns[0]},
 	}
+	// VersionsColumns holds the columns for the "versions" table.
+	VersionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUUID},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "updated_at", Type: field.TypeTime},
+		{Name: "status", Type: field.TypeUint8, Nullable: true, Default: 1},
+		{Name: "title", Type: field.TypeString},
+		{Name: "content", Type: field.TypeString, Size: 2147483647},
+		{Name: "service_uuid", Type: field.TypeUint64},
+		{Name: "url", Type: field.TypeString},
+	}
+	// VersionsTable holds the schema information for the "versions" table.
+	VersionsTable = &schema.Table{
+		Name:       "versions",
+		Columns:    VersionsColumns,
+		PrimaryKey: []*schema.Column{VersionsColumns[0]},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		CategoriesTable,
 		CommentsTable,
 		ServicesTable,
 		SitemetaTable,
+		VersionsTable,
 	}
 )
 

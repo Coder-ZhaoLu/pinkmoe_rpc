@@ -13,7 +13,7 @@ type Comment struct {
 
 func (Comment) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("content").Comment("Content | 评论内容"),
+		field.Text("content").Comment("Content | 评论内容"),
 		field.String("service_uuid").Comment("Service Uuid | 服务ID"),
 		field.String("user_uuid").Comment("User Uuid | 用户ID"),
 		field.Uint32("type").Default(1).Comment("Type | 类型 1: 服务 2: 组件"),

@@ -11,6 +11,7 @@ import (
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/logic/comment"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/logic/service"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/logic/sitemeta"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/logic/version"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/svc"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/pinkmoe"
 )
@@ -123,4 +124,30 @@ func (s *PinkmoeServer) UpdateSitemeta(ctx context.Context, in *pinkmoe.Sitemeta
 func (s *PinkmoeServer) GetSitemetaById(ctx context.Context, in *pinkmoe.KeyReq) (*pinkmoe.SitemetaInfo, error) {
 	l := sitemeta.NewGetSitemetaByIdLogic(ctx, s.svcCtx)
 	return l.GetSitemetaById(in)
+}
+
+// Version management
+func (s *PinkmoeServer) CreateVersion(ctx context.Context, in *pinkmoe.VersionInfo) (*pinkmoe.BaseUUIDResp, error) {
+	l := version.NewCreateVersionLogic(ctx, s.svcCtx)
+	return l.CreateVersion(in)
+}
+
+func (s *PinkmoeServer) UpdateVersion(ctx context.Context, in *pinkmoe.VersionInfo) (*pinkmoe.BaseResp, error) {
+	l := version.NewUpdateVersionLogic(ctx, s.svcCtx)
+	return l.UpdateVersion(in)
+}
+
+func (s *PinkmoeServer) GetVersionList(ctx context.Context, in *pinkmoe.VersionListReq) (*pinkmoe.VersionListResp, error) {
+	l := version.NewGetVersionListLogic(ctx, s.svcCtx)
+	return l.GetVersionList(in)
+}
+
+func (s *PinkmoeServer) GetVersionById(ctx context.Context, in *pinkmoe.UUIDReq) (*pinkmoe.VersionInfo, error) {
+	l := version.NewGetVersionByIdLogic(ctx, s.svcCtx)
+	return l.GetVersionById(in)
+}
+
+func (s *PinkmoeServer) DeleteVersion(ctx context.Context, in *pinkmoe.UUIDsReq) (*pinkmoe.BaseResp, error) {
+	l := version.NewDeleteVersionLogic(ctx, s.svcCtx)
+	return l.DeleteVersion(in)
 }

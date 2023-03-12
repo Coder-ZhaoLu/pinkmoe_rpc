@@ -33,6 +33,9 @@ type (
 	SitemetaInfo     = pinkmoe.SitemetaInfo
 	UUIDReq          = pinkmoe.UUIDReq
 	UUIDsReq         = pinkmoe.UUIDsReq
+	VersionInfo      = pinkmoe.VersionInfo
+	VersionListReq   = pinkmoe.VersionListReq
+	VersionListResp  = pinkmoe.VersionListResp
 
 	Pinkmoe interface {
 		InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error)
@@ -58,6 +61,12 @@ type (
 		// Sitemeta management
 		UpdateSitemeta(ctx context.Context, in *SitemetaInfo, opts ...grpc.CallOption) (*BaseResp, error)
 		GetSitemetaById(ctx context.Context, in *KeyReq, opts ...grpc.CallOption) (*SitemetaInfo, error)
+		// Version management
+		CreateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
+		UpdateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseResp, error)
+		GetVersionList(ctx context.Context, in *VersionListReq, opts ...grpc.CallOption) (*VersionListResp, error)
+		GetVersionById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*VersionInfo, error)
+		DeleteVersion(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
 	}
 
 	defaultPinkmoe struct {
@@ -168,4 +177,30 @@ func (m *defaultPinkmoe) UpdateSitemeta(ctx context.Context, in *SitemetaInfo, o
 func (m *defaultPinkmoe) GetSitemetaById(ctx context.Context, in *KeyReq, opts ...grpc.CallOption) (*SitemetaInfo, error) {
 	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
 	return client.GetSitemetaById(ctx, in, opts...)
+}
+
+// Version management
+func (m *defaultPinkmoe) CreateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.CreateVersion(ctx, in, opts...)
+}
+
+func (m *defaultPinkmoe) UpdateVersion(ctx context.Context, in *VersionInfo, opts ...grpc.CallOption) (*BaseResp, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.UpdateVersion(ctx, in, opts...)
+}
+
+func (m *defaultPinkmoe) GetVersionList(ctx context.Context, in *VersionListReq, opts ...grpc.CallOption) (*VersionListResp, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.GetVersionList(ctx, in, opts...)
+}
+
+func (m *defaultPinkmoe) GetVersionById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*VersionInfo, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.GetVersionById(ctx, in, opts...)
+}
+
+func (m *defaultPinkmoe) DeleteVersion(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error) {
+	client := pinkmoe.NewPinkmoeClient(m.cli.Conn())
+	return client.DeleteVersion(ctx, in, opts...)
 }

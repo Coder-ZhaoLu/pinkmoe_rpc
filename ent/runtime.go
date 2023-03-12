@@ -10,6 +10,7 @@ import (
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/schema"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/service"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/sitemeta"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/version"
 	uuid "github.com/gofrs/uuid/v5"
 )
 
@@ -99,11 +100,11 @@ func init() {
 	// service.DefaultStatus holds the default value on creation for the status field.
 	service.DefaultStatus = serviceDescStatus.Default.(uint8)
 	// serviceDescType is the schema descriptor for type field.
-	serviceDescType := serviceFields[6].Descriptor()
+	serviceDescType := serviceFields[7].Descriptor()
 	// service.DefaultType holds the default value on creation for the type field.
 	service.DefaultType = serviceDescType.Default.(uint32)
 	// serviceDescView is the schema descriptor for view field.
-	serviceDescView := serviceFields[8].Descriptor()
+	serviceDescView := serviceFields[9].Descriptor()
 	// service.DefaultView holds the default value on creation for the view field.
 	service.DefaultView = serviceDescView.Default.(uint64)
 	// serviceDescID is the schema descriptor for id field.
@@ -125,4 +126,29 @@ func init() {
 	sitemeta.DefaultUpdatedAt = sitemetaDescUpdatedAt.Default.(func() time.Time)
 	// sitemeta.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sitemeta.UpdateDefaultUpdatedAt = sitemetaDescUpdatedAt.UpdateDefault.(func() time.Time)
+	versionMixin := schema.Version{}.Mixin()
+	versionMixinFields0 := versionMixin[0].Fields()
+	_ = versionMixinFields0
+	versionMixinFields1 := versionMixin[1].Fields()
+	_ = versionMixinFields1
+	versionFields := schema.Version{}.Fields()
+	_ = versionFields
+	// versionDescCreatedAt is the schema descriptor for created_at field.
+	versionDescCreatedAt := versionMixinFields0[1].Descriptor()
+	// version.DefaultCreatedAt holds the default value on creation for the created_at field.
+	version.DefaultCreatedAt = versionDescCreatedAt.Default.(func() time.Time)
+	// versionDescUpdatedAt is the schema descriptor for updated_at field.
+	versionDescUpdatedAt := versionMixinFields0[2].Descriptor()
+	// version.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	version.DefaultUpdatedAt = versionDescUpdatedAt.Default.(func() time.Time)
+	// version.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	version.UpdateDefaultUpdatedAt = versionDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// versionDescStatus is the schema descriptor for status field.
+	versionDescStatus := versionMixinFields1[0].Descriptor()
+	// version.DefaultStatus holds the default value on creation for the status field.
+	version.DefaultStatus = versionDescStatus.Default.(uint8)
+	// versionDescID is the schema descriptor for id field.
+	versionDescID := versionMixinFields0[0].Descriptor()
+	// version.DefaultID holds the default value on creation for the id field.
+	version.DefaultID = versionDescID.Default.(func() uuid.UUID)
 }

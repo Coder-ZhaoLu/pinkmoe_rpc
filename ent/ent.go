@@ -15,6 +15,7 @@ import (
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/comment"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/service"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/sitemeta"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/version"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -46,6 +47,7 @@ func columnChecker(table string) func(string) error {
 		comment.Table:  comment.ValidColumn,
 		service.Table:  service.ValidColumn,
 		sitemeta.Table: sitemeta.ValidColumn,
+		version.Table:  version.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {

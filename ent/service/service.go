@@ -31,6 +31,8 @@ const (
 	FieldAuthorUUID = "author_uuid"
 	// FieldCover holds the string denoting the cover field in the database.
 	FieldCover = "cover"
+	// FieldDocument holds the string denoting the document field in the database.
+	FieldDocument = "document"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
 	// FieldPrice holds the string denoting the price field in the database.
@@ -53,6 +55,7 @@ var Columns = []string{
 	FieldCategoryID,
 	FieldAuthorUUID,
 	FieldCover,
+	FieldDocument,
 	FieldType,
 	FieldPrice,
 	FieldView,

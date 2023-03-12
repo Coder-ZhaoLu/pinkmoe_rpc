@@ -89,3 +89,6 @@
 {"@timestamp":"2023-03-12T01:26:00.974+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-12T13:47:45.267+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-12T14:56:54.440+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-12T15:23:51.350+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-12T15:23:59.533+08:00","caller":"errorhandler/error_handler.go:29","content":"database error","detail":"Error 1054 (42S22): Unknown column 'services.desc' in 'field list'","level":"error"}
+{"@timestamp":"2023-03-12T15:24:06.938+08:00","caller":"errorhandler/error_handler.go:29","content":"database error","detail":"Error 1054 (42S22): Unknown column 'services.desc' in 'field list'","level":"error"}

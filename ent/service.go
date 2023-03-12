@@ -36,6 +36,8 @@ type Service struct {
 	AuthorUUID string `json:"author_uuid,omitempty"`
 	// Cover | 封面
 	Cover string `json:"cover,omitempty"`
+	// Document | 文档
+	Document string `json:"document,omitempty"`
 	// Type | 类型 1: 微服务 2: 组件库 3: 文章
 	Type uint32 `json:"type,omitempty"`
 	// Price | 价格
@@ -51,7 +53,7 @@ func (*Service) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case service.FieldStatus, service.FieldCategoryID, service.FieldType, service.FieldPrice, service.FieldView:
 			values[i] = new(sql.NullInt64)
-		case service.FieldTitle, service.FieldDesc, service.FieldContent, service.FieldAuthorUUID, service.FieldCover:
+		case service.FieldTitle, service.FieldDesc, service.FieldContent, service.FieldAuthorUUID, service.FieldCover, service.FieldDocument:
 			values[i] = new(sql.NullString)
 		case service.FieldCreatedAt, service.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -132,6 +134,12 @@ func (s *Service) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				s.Cover = value.String
 			}
+		case service.FieldDocument:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field document", values[i])
+			} else if value.Valid {
+				s.Document = value.String
+			}
 		case service.FieldType:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
@@ -204,6 +212,9 @@ func (s *Service) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("cover=")
 	builder.WriteString(s.Cover)
+	builder.WriteString(", ")
+	builder.WriteString("document=")
+	builder.WriteString(s.Document)
 	builder.WriteString(", ")
 	builder.WriteString("type=")
 	builder.WriteString(fmt.Sprintf("%v", s.Type))

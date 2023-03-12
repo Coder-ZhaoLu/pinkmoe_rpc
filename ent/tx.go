@@ -20,6 +20,8 @@ type Tx struct {
 	Service *ServiceClient
 	// Sitemeta is the client for interacting with the Sitemeta builders.
 	Sitemeta *SitemetaClient
+	// Version is the client for interacting with the Version builders.
+	Version *VersionClient
 
 	// lazily loaded.
 	client     *Client
@@ -155,6 +157,7 @@ func (tx *Tx) init() {
 	tx.Comment = NewCommentClient(tx.config)
 	tx.Service = NewServiceClient(tx.config)
 	tx.Sitemeta = NewSitemetaClient(tx.config)
+	tx.Version = NewVersionClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

@@ -15,6 +15,7 @@ import (
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/comment"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/service"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/sitemeta"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/version"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -33,6 +34,8 @@ type Client struct {
 	Service *ServiceClient
 	// Sitemeta is the client for interacting with the Sitemeta builders.
 	Sitemeta *SitemetaClient
+	// Version is the client for interacting with the Version builders.
+	Version *VersionClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -50,6 +53,7 @@ func (c *Client) init() {
 	c.Comment = NewCommentClient(c.config)
 	c.Service = NewServiceClient(c.config)
 	c.Sitemeta = NewSitemetaClient(c.config)
+	c.Version = NewVersionClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -87,6 +91,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		Comment:  NewCommentClient(cfg),
 		Service:  NewServiceClient(cfg),
 		Sitemeta: NewSitemetaClient(cfg),
+		Version:  NewVersionClient(cfg),
 	}, nil
 }
 
@@ -110,6 +115,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		Comment:  NewCommentClient(cfg),
 		Service:  NewServiceClient(cfg),
 		Sitemeta: NewSitemetaClient(cfg),
+		Version:  NewVersionClient(cfg),
 	}, nil
 }
 
@@ -142,6 +148,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.Comment.Use(hooks...)
 	c.Service.Use(hooks...)
 	c.Sitemeta.Use(hooks...)
+	c.Version.Use(hooks...)
 }
 
 // Intercept adds the query interceptors to all the entity clients.
@@ -151,6 +158,7 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 	c.Comment.Intercept(interceptors...)
 	c.Service.Intercept(interceptors...)
 	c.Sitemeta.Intercept(interceptors...)
+	c.Version.Intercept(interceptors...)
 }
 
 // Mutate implements the ent.Mutator interface.
@@ -164,6 +172,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.Service.mutate(ctx, m)
 	case *SitemetaMutation:
 		return c.Sitemeta.mutate(ctx, m)
+	case *VersionMutation:
+		return c.Version.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
 	}
@@ -638,5 +648,123 @@ func (c *SitemetaClient) mutate(ctx context.Context, m *SitemetaMutation) (Value
 		return (&SitemetaDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown Sitemeta mutation op: %q", m.Op())
+	}
+}
+
+// VersionClient is a client for the Version schema.
+type VersionClient struct {
+	config
+}
+
+// NewVersionClient returns a client for the Version from the given config.
+func NewVersionClient(c config) *VersionClient {
+	return &VersionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `version.Hooks(f(g(h())))`.
+func (c *VersionClient) Use(hooks ...Hook) {
+	c.hooks.Version = append(c.hooks.Version, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `version.Intercept(f(g(h())))`.
+func (c *VersionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.Version = append(c.inters.Version, interceptors...)
+}
+
+// Create returns a builder for creating a Version entity.
+func (c *VersionClient) Create() *VersionCreate {
+	mutation := newVersionMutation(c.config, OpCreate)
+	return &VersionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Version entities.
+func (c *VersionClient) CreateBulk(builders ...*VersionCreate) *VersionCreateBulk {
+	return &VersionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Version.
+func (c *VersionClient) Update() *VersionUpdate {
+	mutation := newVersionMutation(c.config, OpUpdate)
+	return &VersionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *VersionClient) UpdateOne(v *Version) *VersionUpdateOne {
+	mutation := newVersionMutation(c.config, OpUpdateOne, withVersion(v))
+	return &VersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *VersionClient) UpdateOneID(id uuid.UUID) *VersionUpdateOne {
+	mutation := newVersionMutation(c.config, OpUpdateOne, withVersionID(id))
+	return &VersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Version.
+func (c *VersionClient) Delete() *VersionDelete {
+	mutation := newVersionMutation(c.config, OpDelete)
+	return &VersionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *VersionClient) DeleteOne(v *Version) *VersionDeleteOne {
+	return c.DeleteOneID(v.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *VersionClient) DeleteOneID(id uuid.UUID) *VersionDeleteOne {
+	builder := c.Delete().Where(version.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &VersionDeleteOne{builder}
+}
+
+// Query returns a query builder for Version.
+func (c *VersionClient) Query() *VersionQuery {
+	return &VersionQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeVersion},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a Version entity by its id.
+func (c *VersionClient) Get(ctx context.Context, id uuid.UUID) (*Version, error) {
+	return c.Query().Where(version.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *VersionClient) GetX(ctx context.Context, id uuid.UUID) *Version {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *VersionClient) Hooks() []Hook {
+	return c.hooks.Version
+}
+
+// Interceptors returns the client interceptors.
+func (c *VersionClient) Interceptors() []Interceptor {
+	return c.inters.Version
+}
+
+func (c *VersionClient) mutate(ctx context.Context, m *VersionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&VersionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&VersionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&VersionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&VersionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown Version mutation op: %q", m.Op())
 	}
 }

@@ -35,6 +35,7 @@ func (l *CreateServiceLogic) CreateService(in *pinkmoe.ServiceInfo) (*pinkmoe.Ba
 		SetCategoryID(uint64(in.CategoryId)).
 		SetAuthorUUID(in.AuthorUuid).
 		SetCover(in.Cover).
+		SetDocument(in.Document).
 		SetType(in.Type).
 		SetPrice(in.Price).
 		SetView(in.View).
