@@ -75,6 +75,11 @@ func Title(v string) predicate.Service {
 	return predicate.Service(sql.FieldEQ(FieldTitle, v))
 }
 
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.Service {
+	return predicate.Service(sql.FieldEQ(FieldDesc, v))
+}
+
 // Content applies equality check predicate on the "content" field. It's identical to ContentEQ.
 func Content(v string) predicate.Service {
 	return predicate.Service(sql.FieldEQ(FieldContent, v))
@@ -303,6 +308,71 @@ func TitleEqualFold(v string) predicate.Service {
 // TitleContainsFold applies the ContainsFold predicate on the "title" field.
 func TitleContainsFold(v string) predicate.Service {
 	return predicate.Service(sql.FieldContainsFold(FieldTitle, v))
+}
+
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.Service {
+	return predicate.Service(sql.FieldEQ(FieldDesc, v))
+}
+
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.Service {
+	return predicate.Service(sql.FieldNEQ(FieldDesc, v))
+}
+
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.Service {
+	return predicate.Service(sql.FieldIn(FieldDesc, vs...))
+}
+
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.Service {
+	return predicate.Service(sql.FieldNotIn(FieldDesc, vs...))
+}
+
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.Service {
+	return predicate.Service(sql.FieldGT(FieldDesc, v))
+}
+
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.Service {
+	return predicate.Service(sql.FieldGTE(FieldDesc, v))
+}
+
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.Service {
+	return predicate.Service(sql.FieldLT(FieldDesc, v))
+}
+
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.Service {
+	return predicate.Service(sql.FieldLTE(FieldDesc, v))
+}
+
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.Service {
+	return predicate.Service(sql.FieldContains(FieldDesc, v))
+}
+
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.Service {
+	return predicate.Service(sql.FieldHasPrefix(FieldDesc, v))
+}
+
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.Service {
+	return predicate.Service(sql.FieldHasSuffix(FieldDesc, v))
+}
+
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.Service {
+	return predicate.Service(sql.FieldEqualFold(FieldDesc, v))
+}
+
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.Service {
+	return predicate.Service(sql.FieldContainsFold(FieldDesc, v))
 }
 
 // ContentEQ applies the EQ predicate on the "content" field.

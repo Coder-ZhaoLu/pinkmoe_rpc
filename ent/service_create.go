@@ -69,6 +69,12 @@ func (sc *ServiceCreate) SetTitle(s string) *ServiceCreate {
 	return sc
 }
 
+// SetDesc sets the "desc" field.
+func (sc *ServiceCreate) SetDesc(s string) *ServiceCreate {
+	sc.mutation.SetDesc(s)
+	return sc
+}
+
 // SetContent sets the "content" field.
 func (sc *ServiceCreate) SetContent(s string) *ServiceCreate {
 	sc.mutation.SetContent(s)
@@ -213,6 +219,9 @@ func (sc *ServiceCreate) check() error {
 	if _, ok := sc.mutation.Title(); !ok {
 		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "Service.title"`)}
 	}
+	if _, ok := sc.mutation.Desc(); !ok {
+		return &ValidationError{Name: "desc", err: errors.New(`ent: missing required field "Service.desc"`)}
+	}
 	if _, ok := sc.mutation.Content(); !ok {
 		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "Service.content"`)}
 	}
@@ -284,6 +293,10 @@ func (sc *ServiceCreate) createSpec() (*Service, *sqlgraph.CreateSpec) {
 	if value, ok := sc.mutation.Title(); ok {
 		_spec.SetField(service.FieldTitle, field.TypeString, value)
 		_node.Title = value
+	}
+	if value, ok := sc.mutation.Desc(); ok {
+		_spec.SetField(service.FieldDesc, field.TypeString, value)
+		_node.Desc = value
 	}
 	if value, ok := sc.mutation.Content(); ok {
 		_spec.SetField(service.FieldContent, field.TypeString, value)

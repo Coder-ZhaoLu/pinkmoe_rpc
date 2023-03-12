@@ -38,6 +38,7 @@ func (l *GetServiceByIdLogic) GetServiceById(in *pinkmoe.UUIDReq) (*pinkmoe.Serv
 		UpdatedAt:  result.CreatedAt.UnixMilli(),
 		Status:     uint32(result.Status),
 		Title:      result.Title,
+		Desc:       result.Desc,
 		Content:    result.Content,
 		CategoryId: int64(result.CategoryID),
 		AuthorUuid: result.AuthorUUID,

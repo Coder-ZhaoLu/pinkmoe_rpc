@@ -29,6 +29,7 @@ func NewCreateServiceLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 func (l *CreateServiceLogic) CreateService(in *pinkmoe.ServiceInfo) (*pinkmoe.BaseUUIDResp, error) {
 	result, err := l.svcCtx.DB.Service.Create().
 		SetTitle(in.Title).
+		SetDesc(in.Desc).
 		SetContent(in.Content).
 		SetStatus(uint8(in.Status)).
 		SetCategoryID(uint64(in.CategoryId)).

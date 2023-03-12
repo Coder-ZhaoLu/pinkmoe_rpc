@@ -26,6 +26,8 @@ type Service struct {
 	Status uint8 `json:"status,omitempty"`
 	// Title | 标题
 	Title string `json:"title,omitempty"`
+	// Desc | 描述
+	Desc string `json:"desc,omitempty"`
 	// Content | 内容
 	Content string `json:"content,omitempty"`
 	// CategoryId | 分类ID
@@ -34,7 +36,7 @@ type Service struct {
 	AuthorUUID string `json:"author_uuid,omitempty"`
 	// Cover | 封面
 	Cover string `json:"cover,omitempty"`
-	// Type | 类型 1: 微服务 2: 组件库
+	// Type | 类型 1: 微服务 2: 组件库 3: 文章
 	Type uint32 `json:"type,omitempty"`
 	// Price | 价格
 	Price uint32 `json:"price,omitempty"`
@@ -49,7 +51,7 @@ func (*Service) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case service.FieldStatus, service.FieldCategoryID, service.FieldType, service.FieldPrice, service.FieldView:
 			values[i] = new(sql.NullInt64)
-		case service.FieldTitle, service.FieldContent, service.FieldAuthorUUID, service.FieldCover:
+		case service.FieldTitle, service.FieldDesc, service.FieldContent, service.FieldAuthorUUID, service.FieldCover:
 			values[i] = new(sql.NullString)
 		case service.FieldCreatedAt, service.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -99,6 +101,12 @@ func (s *Service) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field title", values[i])
 			} else if value.Valid {
 				s.Title = value.String
+			}
+		case service.FieldDesc:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
+			} else if value.Valid {
+				s.Desc = value.String
 			}
 		case service.FieldContent:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -181,6 +189,9 @@ func (s *Service) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("title=")
 	builder.WriteString(s.Title)
+	builder.WriteString(", ")
+	builder.WriteString("desc=")
+	builder.WriteString(s.Desc)
 	builder.WriteString(", ")
 	builder.WriteString("content=")
 	builder.WriteString(s.Content)

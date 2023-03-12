@@ -1683,6 +1683,7 @@ type ServiceMutation struct {
 	status         *uint8
 	addstatus      *int8
 	title          *string
+	desc           *string
 	content        *string
 	category_id    *uint64
 	addcategory_id *int64
@@ -1980,6 +1981,42 @@ func (m *ServiceMutation) OldTitle(ctx context.Context) (v string, err error) {
 // ResetTitle resets all changes to the "title" field.
 func (m *ServiceMutation) ResetTitle() {
 	m.title = nil
+}
+
+// SetDesc sets the "desc" field.
+func (m *ServiceMutation) SetDesc(s string) {
+	m.desc = &s
+}
+
+// Desc returns the value of the "desc" field in the mutation.
+func (m *ServiceMutation) Desc() (r string, exists bool) {
+	v := m.desc
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDesc returns the old "desc" field's value of the Service entity.
+// If the Service object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ServiceMutation) OldDesc(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDesc is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDesc requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
+	}
+	return oldValue.Desc, nil
+}
+
+// ResetDesc resets all changes to the "desc" field.
+func (m *ServiceMutation) ResetDesc() {
+	m.desc = nil
 }
 
 // SetContent sets the "content" field.
@@ -2348,7 +2385,7 @@ func (m *ServiceMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ServiceMutation) Fields() []string {
-	fields := make([]string, 0, 11)
+	fields := make([]string, 0, 12)
 	if m.created_at != nil {
 		fields = append(fields, service.FieldCreatedAt)
 	}
@@ -2360,6 +2397,9 @@ func (m *ServiceMutation) Fields() []string {
 	}
 	if m.title != nil {
 		fields = append(fields, service.FieldTitle)
+	}
+	if m.desc != nil {
+		fields = append(fields, service.FieldDesc)
 	}
 	if m.content != nil {
 		fields = append(fields, service.FieldContent)
@@ -2398,6 +2438,8 @@ func (m *ServiceMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case service.FieldTitle:
 		return m.Title()
+	case service.FieldDesc:
+		return m.Desc()
 	case service.FieldContent:
 		return m.Content()
 	case service.FieldCategoryID:
@@ -2429,6 +2471,8 @@ func (m *ServiceMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldStatus(ctx)
 	case service.FieldTitle:
 		return m.OldTitle(ctx)
+	case service.FieldDesc:
+		return m.OldDesc(ctx)
 	case service.FieldContent:
 		return m.OldContent(ctx)
 	case service.FieldCategoryID:
@@ -2479,6 +2523,13 @@ func (m *ServiceMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTitle(v)
+		return nil
+	case service.FieldDesc:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDesc(v)
 		return nil
 	case service.FieldContent:
 		v, ok := value.(string)
@@ -2661,6 +2712,9 @@ func (m *ServiceMutation) ResetField(name string) error {
 		return nil
 	case service.FieldTitle:
 		m.ResetTitle()
+		return nil
+	case service.FieldDesc:
+		m.ResetDesc()
 		return nil
 	case service.FieldContent:
 		m.ResetContent()

@@ -3,9 +3,34 @@ syntax = "proto3";
 package pinkmoe;
 option go_package="./pinkmoe";
 
+message UUIDReq {
+  string id = 1;
+}
+
+message PageInfoReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+}
+
 message BaseIDResp {
   uint64 id = 1;
   string msg = 2;
+}
+
+message CategoryListResp {
+  uint64 total = 1;
+  repeated CategoryInfo data = 2;
+}
+
+message CommentListResp {
+  uint64 total = 1;
+  repeated CommentInfo data = 2;
+}
+
+message CommentListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string content = 3;
 }
 
 message ServiceListResp {
@@ -13,15 +38,25 @@ message ServiceListResp {
   repeated ServiceInfo data = 2;
 }
 
-//  base message
-message Empty {}
-
-message IDsReq {
-  repeated uint64 ids = 1;
-}
-
 message UUIDsReq {
   repeated string ids = 1;
+}
+
+message CategoryListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string name = 3;
+  string slug = 4;
+  string icon = 5;
+  uint32 type = 6;
+}
+
+message ServiceListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string title = 3;
+  string content = 4;
+  string cover = 5;
 }
 
 message CategoryInfo {
@@ -37,17 +72,12 @@ message CategoryInfo {
   uint32 type = 10;
 }
 
-message CommentListResp {
-  uint64 total = 1;
-  repeated CommentInfo data = 2;
+message IDsReq {
+  repeated uint64 ids = 1;
 }
 
-message KeyReq {
-  string key = 1;
-}
-
-message UUIDReq {
-  string id = 1;
+message BaseResp {
+  string msg = 1;
 }
 
 message BaseUUIDResp {
@@ -55,27 +85,32 @@ message BaseUUIDResp {
   string msg = 2;
 }
 
-message ServiceListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string title = 3;
-  string content = 4;
-  string cover = 5;
+message ServiceInfo {
+  string id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 status = 4;
+  string title = 5;
+  string desc = 6;
+  string content = 7;
+  int64 category_id = 8;
+  string author_uuid = 9;
+  string cover = 10;
+  uint32 type = 11;
+  uint32 price = 12;
+  uint64 view = 13;
 }
 
-message CategoryListResp {
-  uint64 total = 1;
-  repeated CategoryInfo data = 2;
+message SitemetaInfo {
+  uint64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  string key = 4;
+  string value = 5;
 }
 
-message CategoryListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string name = 3;
-  string slug = 4;
-  string icon = 5;
-  uint32 type = 6;
-}
+//  base message
+message Empty {}
 
 message CommentInfo {
   string id = 1;
@@ -88,46 +123,12 @@ message CommentInfo {
   uint32 type = 8;
 }
 
-message CommentListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string content = 3;
-}
-
-message ServiceInfo {
-  string id = 1;
-  int64 created_at = 2;
-  int64 updated_at = 3;
-  uint32 status = 4;
-  string title = 5;
-  string content = 6;
-  int64 category_id = 7;
-  string author_uuid = 8;
-  string cover = 9;
-  uint32 type = 10;
-  uint32 price = 11;
-  uint64 view = 12;
+message KeyReq {
+  string key = 1;
 }
 
 message IDReq {
   uint64 id = 1;
-}
-
-message BaseResp {
-  string msg = 1;
-}
-
-message PageInfoReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-}
-
-message SitemetaInfo {
-  uint64 id = 1;
-  int64 created_at = 2;
-  int64 updated_at = 3;
-  string key = 4;
-  string value = 5;
 }
 
 service Pinkmoe {

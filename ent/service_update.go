@@ -67,6 +67,12 @@ func (su *ServiceUpdate) SetTitle(s string) *ServiceUpdate {
 	return su
 }
 
+// SetDesc sets the "desc" field.
+func (su *ServiceUpdate) SetDesc(s string) *ServiceUpdate {
+	su.mutation.SetDesc(s)
+	return su
+}
+
 // SetContent sets the "content" field.
 func (su *ServiceUpdate) SetContent(s string) *ServiceUpdate {
 	su.mutation.SetContent(s)
@@ -218,6 +224,9 @@ func (su *ServiceUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := su.mutation.Title(); ok {
 		_spec.SetField(service.FieldTitle, field.TypeString, value)
 	}
+	if value, ok := su.mutation.Desc(); ok {
+		_spec.SetField(service.FieldDesc, field.TypeString, value)
+	}
 	if value, ok := su.mutation.Content(); ok {
 		_spec.SetField(service.FieldContent, field.TypeString, value)
 	}
@@ -307,6 +316,12 @@ func (suo *ServiceUpdateOne) ClearStatus() *ServiceUpdateOne {
 // SetTitle sets the "title" field.
 func (suo *ServiceUpdateOne) SetTitle(s string) *ServiceUpdateOne {
 	suo.mutation.SetTitle(s)
+	return suo
+}
+
+// SetDesc sets the "desc" field.
+func (suo *ServiceUpdateOne) SetDesc(s string) *ServiceUpdateOne {
+	suo.mutation.SetDesc(s)
 	return suo
 }
 
@@ -490,6 +505,9 @@ func (suo *ServiceUpdateOne) sqlSave(ctx context.Context) (_node *Service, err e
 	}
 	if value, ok := suo.mutation.Title(); ok {
 		_spec.SetField(service.FieldTitle, field.TypeString, value)
+	}
+	if value, ok := suo.mutation.Desc(); ok {
+		_spec.SetField(service.FieldDesc, field.TypeString, value)
 	}
 	if value, ok := suo.mutation.Content(); ok {
 		_spec.SetField(service.FieldContent, field.TypeString, value)

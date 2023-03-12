@@ -51,6 +51,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Default: 1},
 		{Name: "title", Type: field.TypeString},
+		{Name: "desc", Type: field.TypeString},
 		{Name: "content", Type: field.TypeString},
 		{Name: "category_id", Type: field.TypeUint64},
 		{Name: "author_uuid", Type: field.TypeString},

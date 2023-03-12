@@ -29,6 +29,7 @@ func NewUpdateServiceLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upd
 func (l *UpdateServiceLogic) UpdateService(in *pinkmoe.ServiceInfo) (*pinkmoe.BaseResp, error) {
 	err := l.svcCtx.DB.Service.UpdateOneID(uuidx.ParseUUIDString(in.Id)).
 		SetNotEmptyTitle(in.Title).
+		SetNotEmptyDesc(in.Desc).
 		SetNotEmptyContent(in.Content).
 		SetNotEmptyCategoryID(uint64(in.CategoryId)).
 		SetNotEmptyAuthorUUID(in.AuthorUuid).

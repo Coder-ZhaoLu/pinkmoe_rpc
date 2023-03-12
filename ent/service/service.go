@@ -21,6 +21,8 @@ const (
 	FieldStatus = "status"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// FieldContent holds the string denoting the content field in the database.
 	FieldContent = "content"
 	// FieldCategoryID holds the string denoting the category_id field in the database.
@@ -46,6 +48,7 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldStatus,
 	FieldTitle,
+	FieldDesc,
 	FieldContent,
 	FieldCategoryID,
 	FieldAuthorUUID,

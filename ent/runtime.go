@@ -99,11 +99,11 @@ func init() {
 	// service.DefaultStatus holds the default value on creation for the status field.
 	service.DefaultStatus = serviceDescStatus.Default.(uint8)
 	// serviceDescType is the schema descriptor for type field.
-	serviceDescType := serviceFields[5].Descriptor()
+	serviceDescType := serviceFields[6].Descriptor()
 	// service.DefaultType holds the default value on creation for the type field.
 	service.DefaultType = serviceDescType.Default.(uint32)
 	// serviceDescView is the schema descriptor for view field.
-	serviceDescView := serviceFields[7].Descriptor()
+	serviceDescView := serviceFields[8].Descriptor()
 	// service.DefaultView holds the default value on creation for the view field.
 	service.DefaultView = serviceDescView.Default.(uint64)
 	// serviceDescID is the schema descriptor for id field.

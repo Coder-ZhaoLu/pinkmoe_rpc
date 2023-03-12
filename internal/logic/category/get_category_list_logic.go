@@ -2,6 +2,7 @@ package category
 
 import (
 	"context"
+	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/category"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/ent/predicate"
 	"github.com/Coder-ZhaoLu/pinkmoe_rpc/internal/svc"
@@ -36,7 +37,9 @@ func (l *GetCategoryListLogic) GetCategoryList(in *pinkmoe.CategoryListReq) (*pi
 	if in.Icon != "" {
 		predicates = append(predicates, category.IconContains(in.Icon))
 	}
-	result, err := l.svcCtx.DB.Category.Query().Where(predicates...).Page(l.ctx, in.Page, in.PageSize)
+	result, err := l.svcCtx.DB.Category.Query().Where(predicates...).Page(l.ctx, in.Page, in.PageSize, func(pager *ent.CategoryPager) {
+		pager.Order = ent.Asc(category.FieldSort)
+	})
 	if err != nil {
 		return nil, errorhandler.DefaultEntError(err, in)
 	}

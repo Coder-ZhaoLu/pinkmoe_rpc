@@ -227,6 +227,22 @@ func (s *ServiceUpdateOne) SetNotEmptyTitle(value string) *ServiceUpdateOne {
 }
 
 // set field if value is not empty. e.g. string does not equal to ""
+func (s *ServiceUpdate) SetNotEmptyDesc(value string) *ServiceUpdate {
+	if value != "" {
+		return s.SetDesc(value)
+	}
+	return s
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
+func (s *ServiceUpdateOne) SetNotEmptyDesc(value string) *ServiceUpdateOne {
+	if value != "" {
+		return s.SetDesc(value)
+	}
+	return s
+}
+
+// set field if value is not empty. e.g. string does not equal to ""
 func (s *ServiceUpdate) SetNotEmptyContent(value string) *ServiceUpdate {
 	if value != "" {
 		return s.SetContent(value)
