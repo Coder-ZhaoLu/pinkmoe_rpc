@@ -3,73 +3,13 @@ syntax = "proto3";
 package pinkmoe;
 option go_package="./pinkmoe";
 
-message BaseResp {
-  string msg = 1;
-}
-
-message PageInfoReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-}
-
-message ServiceListResp {
-  uint64 total = 1;
-  repeated ServiceInfo data = 2;
-}
-
-message ServiceListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string title = 3;
-  string content = 4;
-  string cover = 5;
-}
-
-message UUIDsReq {
-  repeated string ids = 1;
-}
-
-message IDsReq {
-  repeated uint64 ids = 1;
-}
-
-message BaseIDResp {
-  uint64 id = 1;
-  string msg = 2;
-}
-
-message BaseUUIDResp {
+message UUIDReq {
   string id = 1;
-  string msg = 2;
-}
-
-message CategoryInfo {
-  uint64 id = 1;
-  int64 created_at = 2;
-  int64 updated_at = 3;
-  uint32 sort = 4;
-  uint32 status = 5;
-  string name = 6;
-  string slug = 7;
-  string icon = 8;
-  string desc = 9;
-  uint32 type = 10;
 }
 
 message CategoryListResp {
   uint64 total = 1;
   repeated CategoryInfo data = 2;
-}
-
-message CommentInfo {
-  string id = 1;
-  int64 created_at = 2;
-  int64 updated_at = 3;
-  uint32 status = 4;
-  string content = 5;
-  string service_uuid = 6;
-  string user_uuid = 7;
-  uint32 type = 8;
 }
 
 message ServiceInfo {
@@ -87,41 +27,12 @@ message ServiceInfo {
   uint32 price = 12;
   uint64 view = 13;
   string document = 14;
+  string version = 15;
 }
 
-message IDReq {
-  uint64 id = 1;
-}
-
-message VersionListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string title = 3;
-  string content = 4;
-  string url = 5;
-}
-
-//  base message
-message Empty {}
-
-message CategoryListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string name = 3;
-  string slug = 4;
-  string icon = 5;
-  uint32 type = 6;
-}
-
-message CommentListResp {
+message ServiceListResp {
   uint64 total = 1;
-  repeated CommentInfo data = 2;
-}
-
-message CommentListReq {
-  uint64 page = 1;
-  uint64 page_size = 2;
-  string content = 3;
+  repeated ServiceInfo data = 2;
 }
 
 message SitemetaInfo {
@@ -132,8 +43,29 @@ message SitemetaInfo {
   string value = 5;
 }
 
-message KeyReq {
-  string key = 1;
+//  base message
+message Empty {}
+
+message BaseIDResp {
+  uint64 id = 1;
+  string msg = 2;
+}
+
+message CategoryListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string name = 3;
+  string slug = 4;
+  string icon = 5;
+  uint32 type = 6;
+}
+
+message ServiceListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string title = 3;
+  string content = 4;
+  string cover = 5;
 }
 
 message VersionInfo {
@@ -152,8 +84,77 @@ message VersionListResp {
   repeated VersionInfo data = 2;
 }
 
-message UUIDReq {
+message IDReq {
+  uint64 id = 1;
+}
+
+message UUIDsReq {
+  repeated string ids = 1;
+}
+
+message CategoryInfo {
+  uint64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 sort = 4;
+  uint32 status = 5;
+  string name = 6;
+  string slug = 7;
+  string icon = 8;
+  string desc = 9;
+  uint32 type = 10;
+}
+
+message CommentListResp {
+  uint64 total = 1;
+  repeated CommentInfo data = 2;
+}
+
+message KeyReq {
+  string key = 1;
+}
+
+message CommentListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string content = 3;
+}
+
+message VersionListReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  string title = 3;
+  string content = 4;
+  string url = 5;
+}
+
+message IDsReq {
+  repeated uint64 ids = 1;
+}
+
+message BaseResp {
+  string msg = 1;
+}
+
+message PageInfoReq {
+  uint64 page = 1;
+  uint64 page_size = 2;
+}
+
+message BaseUUIDResp {
   string id = 1;
+  string msg = 2;
+}
+
+message CommentInfo {
+  string id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  uint32 status = 4;
+  string content = 5;
+  string service_uuid = 6;
+  string user_uuid = 7;
+  uint32 type = 8;
 }
 
 service Pinkmoe {

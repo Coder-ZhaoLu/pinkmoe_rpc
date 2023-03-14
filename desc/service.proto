@@ -17,6 +17,7 @@ message ServiceInfo {
   uint32 price = 12;
   uint64 view = 13;
   string document = 14;
+  string version = 15;
 }
 
 message ServiceListResp {
