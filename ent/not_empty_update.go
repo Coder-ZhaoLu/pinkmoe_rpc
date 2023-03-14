@@ -323,22 +323,6 @@ func (s *ServiceUpdateOne) SetNotEmptyDocument(value string) *ServiceUpdateOne {
 }
 
 // set field if value is not empty. e.g. string does not equal to ""
-func (s *ServiceUpdate) SetNotEmptyVersion(value string) *ServiceUpdate {
-	if value != "" {
-		return s.SetVersion(value)
-	}
-	return s
-}
-
-// set field if value is not empty. e.g. string does not equal to ""
-func (s *ServiceUpdateOne) SetNotEmptyVersion(value string) *ServiceUpdateOne {
-	if value != "" {
-		return s.SetVersion(value)
-	}
-	return s
-}
-
-// set field if value is not empty. e.g. string does not equal to ""
 func (s *ServiceUpdate) SetNotEmptyType(value uint32) *ServiceUpdate {
 	if value != 0 {
 		return s.SetType(value)

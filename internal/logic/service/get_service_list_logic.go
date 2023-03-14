@@ -49,7 +49,6 @@ func (l *GetServiceListLogic) GetServiceList(in *pinkmoe.ServiceListReq) (*pinkm
 			Status:     uint32(v.Status),
 			Title:      v.Title,
 			Document:   v.Document,
-			Version:    v.Version,
 			Desc:       v.Desc,
 			Content:    v.Content,
 			CategoryId: int64(v.CategoryID),

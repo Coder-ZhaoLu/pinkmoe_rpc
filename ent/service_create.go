@@ -105,12 +105,6 @@ func (sc *ServiceCreate) SetDocument(s string) *ServiceCreate {
 	return sc
 }
 
-// SetVersion sets the "version" field.
-func (sc *ServiceCreate) SetVersion(s string) *ServiceCreate {
-	sc.mutation.SetVersion(s)
-	return sc
-}
-
 // SetType sets the "type" field.
 func (sc *ServiceCreate) SetType(u uint32) *ServiceCreate {
 	sc.mutation.SetType(u)
@@ -249,9 +243,6 @@ func (sc *ServiceCreate) check() error {
 	if _, ok := sc.mutation.Document(); !ok {
 		return &ValidationError{Name: "document", err: errors.New(`ent: missing required field "Service.document"`)}
 	}
-	if _, ok := sc.mutation.Version(); !ok {
-		return &ValidationError{Name: "version", err: errors.New(`ent: missing required field "Service.version"`)}
-	}
 	if _, ok := sc.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Service.type"`)}
 	}
@@ -335,10 +326,6 @@ func (sc *ServiceCreate) createSpec() (*Service, *sqlgraph.CreateSpec) {
 	if value, ok := sc.mutation.Document(); ok {
 		_spec.SetField(service.FieldDocument, field.TypeString, value)
 		_node.Document = value
-	}
-	if value, ok := sc.mutation.Version(); ok {
-		_spec.SetField(service.FieldVersion, field.TypeString, value)
-		_node.Version = value
 	}
 	if value, ok := sc.mutation.GetType(); ok {
 		_spec.SetField(service.FieldType, field.TypeUint32, value)
