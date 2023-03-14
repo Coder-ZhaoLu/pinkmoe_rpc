@@ -1692,6 +1692,7 @@ type ServiceMutation struct {
 	author_uuid    *string
 	cover          *string
 	document       *string
+	version        *string
 	_type          *uint32
 	add_type       *int32
 	price          *uint32
@@ -2222,6 +2223,42 @@ func (m *ServiceMutation) ResetDocument() {
 	m.document = nil
 }
 
+// SetVersion sets the "version" field.
+func (m *ServiceMutation) SetVersion(s string) {
+	m.version = &s
+}
+
+// Version returns the value of the "version" field in the mutation.
+func (m *ServiceMutation) Version() (r string, exists bool) {
+	v := m.version
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersion returns the old "version" field's value of the Service entity.
+// If the Service object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ServiceMutation) OldVersion(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersion is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersion requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersion: %w", err)
+	}
+	return oldValue.Version, nil
+}
+
+// ResetVersion resets all changes to the "version" field.
+func (m *ServiceMutation) ResetVersion() {
+	m.version = nil
+}
+
 // SetType sets the "type" field.
 func (m *ServiceMutation) SetType(u uint32) {
 	m._type = &u
@@ -2424,7 +2461,7 @@ func (m *ServiceMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ServiceMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 14)
 	if m.created_at != nil {
 		fields = append(fields, service.FieldCreatedAt)
 	}
@@ -2454,6 +2491,9 @@ func (m *ServiceMutation) Fields() []string {
 	}
 	if m.document != nil {
 		fields = append(fields, service.FieldDocument)
+	}
+	if m.version != nil {
+		fields = append(fields, service.FieldVersion)
 	}
 	if m._type != nil {
 		fields = append(fields, service.FieldType)
@@ -2492,6 +2532,8 @@ func (m *ServiceMutation) Field(name string) (ent.Value, bool) {
 		return m.Cover()
 	case service.FieldDocument:
 		return m.Document()
+	case service.FieldVersion:
+		return m.Version()
 	case service.FieldType:
 		return m.GetType()
 	case service.FieldPrice:
@@ -2527,6 +2569,8 @@ func (m *ServiceMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldCover(ctx)
 	case service.FieldDocument:
 		return m.OldDocument(ctx)
+	case service.FieldVersion:
+		return m.OldVersion(ctx)
 	case service.FieldType:
 		return m.OldType(ctx)
 	case service.FieldPrice:
@@ -2611,6 +2655,13 @@ func (m *ServiceMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDocument(v)
+		return nil
+	case service.FieldVersion:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersion(v)
 		return nil
 	case service.FieldType:
 		v, ok := value.(uint32)
@@ -2783,6 +2834,9 @@ func (m *ServiceMutation) ResetField(name string) error {
 		return nil
 	case service.FieldDocument:
 		m.ResetDocument()
+		return nil
+	case service.FieldVersion:
+		m.ResetVersion()
 		return nil
 	case service.FieldType:
 		m.ResetType()

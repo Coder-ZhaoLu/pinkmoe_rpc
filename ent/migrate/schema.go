@@ -57,6 +57,7 @@ var (
 		{Name: "author_uuid", Type: field.TypeString},
 		{Name: "cover", Type: field.TypeString},
 		{Name: "document", Type: field.TypeString},
+		{Name: "version", Type: field.TypeString},
 		{Name: "type", Type: field.TypeUint32, Default: 1},
 		{Name: "price", Type: field.TypeUint32},
 		{Name: "view", Type: field.TypeUint64, Default: 0},
