@@ -106,3 +106,4 @@
 {"@timestamp":"2023-03-12T22:55:57.072+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-12T22:57:02.436+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
 {"@timestamp":"2023-03-13T19:03:03.191+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 0.0.0.0:4001: bind: address already in use","level":"error"}
+{"@timestamp":"2023-03-13T19:26:27.175+08:00","caller":"clientinterceptors/durationinterceptor.go:35","content":"fail - direct:/127.0.0.1:2333/core.Core/createApi - path:\"/sitemeta/update\"  description:\"apiDesc.updateSitemeta\"  api_group:\"sitemeta\"  method:\"POST\" - rpc error: code = InvalidArgument desc = common.constraintError","duration":"9.5ms","level":"error","span":"9d7f57f0469bf892","trace":"f96d50752289640a6e8308c58b7c4f8b"}

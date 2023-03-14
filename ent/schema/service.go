@@ -20,6 +20,7 @@ func (Service) Fields() []ent.Field {
 		field.String("author_uuid").Comment("AuthorUuid | 作者ID"),
 		field.String("cover").Comment("Cover | 封面"),
 		field.String("document").Comment("Document | 文档"),
+		field.String("version").Comment("Version | 版本"),
 		field.Uint32("type").Default(1).Comment("Type | 类型 1: 微服务 2: 组件库 3: 文章"),
 		field.Uint32("price").Comment("Price | 价格"),
 		field.Uint64("view").Default(0).Comment("View | 查看数"),
